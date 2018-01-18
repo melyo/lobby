@@ -59,7 +59,7 @@ module.exports = {
     let input = req.body
     let rules = {
       name: 'required',
-      type: 'required',
+      type: 'required|in:1,16,256',
       message: 'required'
     }
     validateAll(input, rules)

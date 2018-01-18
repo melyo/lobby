@@ -59,7 +59,7 @@ POST /api/v1/lobbies/{id}/messages
 ``` json
 {
     "name": "Bot001",
-    "type": 256,
+    "type": "16",
     "name": "Lorem ipsum dolor sit amet"
 }
 ```

@@ -20,7 +20,7 @@ export default {
       loading: '',
       form: {
         name: '',
-        type: 256,
+        type: '16',
         message: ''
       },
       error: false
