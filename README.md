@@ -1,30 +1,65 @@
-# core-ui
+# Lobby
 
-> Open Source Admin Template
+### Dependencies
 
-## Build Setup
+- Node.js
+- Express.js
+- MySQL
+- Vue.js
+- Scss
+
+### Set up
 
 ``` bash
+# clone this repository
+git clone https://github.com/melyo/lobby.git
+
+# go to project root folder / directory
+cd events-analytics
+
 # install dependencies
 npm install
 
-# serve with hot reload at localhost:8080
-npm run dev
+# set up MySQL as database then create and configure .env file
+cp .env.sample .env
 
-# build for production with minification
+# create lobbies and messages database tables from migrations/ folder
+
+# build frontend for production with minification
 npm run build
 
-# build for production and view the bundle analyzer report
-npm run build --report
-
-# run unit tests
-npm run unit
-
-# run e2e tests
-npm run e2e
-
-# run all tests
-npm test
+# run Express.js
+npm start
 ```
 
-For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+### Required API Routes
+
+| Method    | URI                           | Description               |
+| ---       | ---                           | ---                       |
+| GET       | /api/v1/lobbies               | get all lobbies           |
+| POST      | /api/v1/lobbies               | create lobby              |
+| PATCH     | /api/v1/lobbies/{id}/join     | join lobby                |
+| PATCH     | /api/v1/lobbies/{id}/exit     | exit lobby                |
+| DELETE    | /api/v1/lobbies/{id}          | delete lobby              |
+| GET       | /api/v1/lobbies/{id}/messages | get messages from lobby   |
+| POST      | /api/v1/lobbies/{id}/messages | send message within lobby |
+
+### Request Body
+
+POST /api/v1/lobbies
+
+``` json
+{
+	"name": "Lobby001"
+}
+```
+
+POST /api/v1/lobbies/{id}/messages
+
+``` json
+{
+    "name": "Bot001",
+    "type": 256,
+    "name": "Lorem ipsum dolor sit amet"
+}
+```
