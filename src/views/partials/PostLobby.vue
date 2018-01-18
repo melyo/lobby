@@ -1,13 +1,8 @@
 <template>
   <b-card-footer class="p-4" v-show="screen === 1">
     <form @submit.prevent="createLobby()">
-      <b-input-group>
-        <b-input-group-addon>Lobby Name</b-input-group-addon>
-        <b-form-input v-model="form.name"></b-form-input>
-        <b-input-group-button slot="right">
-          <b-btn variant="success" type="submit" :disabled="loading">Create</b-btn>
-        </b-input-group-button>
-      </b-input-group>
+      <b-form-input v-model="form.name" placeholder="Lobby name ..."></b-form-input>
+      <b-btn block variant="success" type="submit" :disabled="loading">Create</b-btn>
     </form>
   </b-card-footer>
 </template>

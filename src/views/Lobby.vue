@@ -1,9 +1,9 @@
 <template>
   <div class="app flex-row align-items-center">
-    <div class="container">
+    <div class="container" style="padding: 0;">
       <b-row class="justify-content-center">
         <b-col md="6" sm="8">
-          <b-card no-body class="mx-4">
+          <b-card no-body>
             <b-card-header class="chat-header" v-show="screen === 1">
               <h4>Lobby</h4>
             </b-card-header>
@@ -55,13 +55,11 @@ export default {
   },
   sockets: {
     connect() {
-      // Fired when the socket connects.
-      // this.isConnected = true;
+      // 
     },
     disconnect() {
-      // this.isConnected = false;
+      // 
     },
-    // Fired when the server sends something on the "messageChannel" channel.
     lobbyChannel(data) {
       this.refreshLobby()
     },
