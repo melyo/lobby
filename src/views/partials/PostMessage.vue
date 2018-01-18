@@ -32,7 +32,7 @@ export default {
       HTTP.post(`/api/v1/lobbies/${this.lobby.id}/messages`, this.form)
         .then(response => {
           this.resetForm()
-          this.$parent.refreshMessage(this.lobby.id)
+          this.$socket.emit('messageLobby', this.lobby)
           this.error = false
           this.loading = false
         })

@@ -53,11 +53,27 @@ export default {
   mounted () {
     this.initState()
   },
+  sockets: {
+    connect() {
+      // Fired when the socket connects.
+      // this.isConnected = true;
+    },
+    disconnect() {
+      // this.isConnected = false;
+    },
+    // Fired when the server sends something on the "messageChannel" channel.
+    lobbyChannel(data) {
+      this.refreshLobby()
+    },
+    messageChannel(data) {
+      this.refreshMessage(data)
+    }
+  },
   methods: {
     enterLobby (lobby) {
       this.screen++
       this.selectedLobby = lobby
-      this.refreshMessage(lobby.id)
+      this.refreshMessage(lobby)
     },
     initState () {
       this.screen = 1
@@ -66,15 +82,15 @@ export default {
     refreshLobby () {
       this.$refs.room.getLobbies()
     },
-    refreshMessage (id) {
-      this.$refs.chat.getMessages(id)
+    refreshMessage (lobby) {
+      this.$refs.chat.getMessages(lobby.id)
     },
     exitLobby () {
       this.loading = true
       HTTP.patch(`/api/v1/lobbies/${this.selectedLobby.id}/exit`)
         .then(response => {
           this.initState()
-          this.refreshLobby()
+          this.$socket.emit('exitLobby', this.selectedLobby)
           this.loading = false
         })
         .catch(error => { this.loading = false })

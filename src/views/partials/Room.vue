@@ -47,6 +47,7 @@ export default {
       HTTP.patch(`/api/v1/lobbies/${lobby.id}/join`)
         .then(response => {
           this.$parent.enterLobby(lobby)
+          this.$socket.emit('joinLobby', lobby)
           this.loading = false
         })
         .catch(error => {
@@ -57,7 +58,7 @@ export default {
       this.loading = true
       HTTP.delete(`/api/v1/lobbies/${id}`)
         .then(response => {
-          this.$parent.refreshLobby()
+          this.$socket.emit('refreshLobby')
           this.loading = false
         })
         .catch(error => {
