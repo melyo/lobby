@@ -31,36 +31,48 @@ app.use(history())
 app.use(serveStatic(__dirname + "/dist"))
 
 // get our server running
+var os = require('os')
+var ifaces = os.networkInterfaces()
 var port = process.env.APP_PORT || 3000
-var server = app.listen(port, () => { console.log(`Up and running on port ${port}`) })
+var server = app.listen(port, () => {
+  console.log(`Up and running on localhost:${port}`)
+  for (var a in ifaces) {
+    for (var b in ifaces[a]) {
+        var addr = ifaces[a][b]
+        if (addr.family === 'IPv4' && !addr.internal) {
+          console.log(`Up and running on ${addr.address}:${port}`)
+        }
+    }
+  }
+})
 
 // Socket setup & pass server
-var socket = require('socket.io');
-var io = socket(server);
+var socket = require('socket.io')
+var io = socket(server)
 io.on('connection', (socket) => {
 
-  console.log('made socket connection', socket.id);
+  console.log('made socket connection', socket.id)
 
   socket.on('joinLobby', function(lobby){
     socket.join(lobby.name)
     io.sockets.emit('lobbyChannel', 'refresh')
-  });
+  })
 
   socket.on('exitLobby', function(lobby){
     socket.leave(lobby.name)
     io.sockets.emit('lobbyChannel', 'refresh')
-  });
+  })
 
   socket.on('refreshLobby', function(){
     io.sockets.emit('lobbyChannel', 'refresh')
-  });
+  })
 
   socket.on('messageLobby', function(lobby){
     io.sockets.in(lobby.name).emit('messageChannel', lobby)
-  });
+  })
 
   socket.on('disconnect', function(){
-    console.log('disconnected', socket.id);
-  });
+    console.log('disconnected', socket.id)
+  })
 
-});
+})
