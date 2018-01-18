@@ -1,5 +1,5 @@
 <template>
-  <b-card-body class="chat-body" v-show="screen === 2">
+  <b-card-body ref="messages" class="chat-body" v-show="screen === 2">
     <b-card v-for="message in messages" :key="message.id">
       <strong>{{ message.name }}:</strong>
       <p class="card-text">{{ message.message }}</p>
@@ -19,13 +19,19 @@ export default {
       messages: []
     }
   },
+  watch: {
+    messages () {
+      this.$nextTick(() => {
+        const card = this.$refs.messages
+        card.scrollTop = card.scrollHeight
+      })
+    }
+  },
   methods: {
     getMessages(id) {
-      console.log('boom')
       this.loading = true
       HTTP.get(`/api/v1/lobbies/${id}/messages`)
         .then(response => {
-          console.log(response.data.data)
           this.messages = response.data.data
           this.loading = false
         })

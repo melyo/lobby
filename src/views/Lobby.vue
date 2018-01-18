@@ -10,7 +10,7 @@
             <room ref="room" v-bind:screen="screen"></room>
             <chat ref="chat" v-bind:screen="screen" v-bind:lobby="selectedLobby"></chat>
             <post-lobby ref="post-lobby" v-bind:screen="screen"></post-lobby>
-            <post-message ref="post-message" v-bind:screen="screen"></post-message>
+            <post-message ref="post-message" v-bind:screen="screen" v-bind:lobby="selectedLobby"></post-message>
           </b-card>
         </b-col>
       </b-row>

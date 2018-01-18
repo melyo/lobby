@@ -1,6 +1,6 @@
 <template>
   <b-card-footer class="p-4" v-show="screen === 1">
-    <form @submit.prevent="getLobbies()">
+    <form @submit.prevent="createLobby()">
       <b-input-group>
         <b-input-group-addon>Lobby Name</b-input-group-addon>
         <b-form-input v-model="form.name"></b-form-input>
@@ -28,7 +28,7 @@ export default {
     }
   },
   methods: {
-    getLobbies () {
+    createLobby () {
       this.loading = true
       HTTP.post('/api/v1/lobbies', this.form)
         .then(response => {
