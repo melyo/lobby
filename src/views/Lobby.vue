@@ -8,7 +8,7 @@
               <h4>Lobby</h4>
             </b-card-header>
             <room ref="room" v-bind:screen="screen"></room>
-            <chat ref="chat" v-bind:screen="screen"></chat>
+            <chat ref="chat" v-bind:screen="screen" v-bind:lobby="selectedLobby"></chat>
             <post-lobby ref="post-lobby" v-bind:screen="screen"></post-lobby>
             <post-message ref="post-message" v-bind:screen="screen"></post-message>
           </b-card>
@@ -34,24 +34,32 @@ export default {
   },
   data () {
     return {
-      screen: 1
+      screen: 1,
+      selectedLobby: {}
     }
   },
   mounted () {
     this.initState()
   },
   methods: {
-    enterLobby () {
+    enterLobby (lobby) {
       this.screen++
+      this.selectedLobby = lobby
+      this.refreshMessage(lobby.id)
     },
     backLobby () {
       this.initState()
+      this.refreshLobby()
     },
     initState () {
       this.screen = 1
+      this.selectedLobby = {}
     },
     refreshLobby () {
       this.$refs.room.getLobbies()
+    },
+    refreshMessage (id) {
+      this.$refs.chat.getMessages(id)
     },
   }
 }

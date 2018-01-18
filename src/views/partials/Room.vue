@@ -7,7 +7,7 @@
           <h6 class="card-subtitle mb-2 text-muted">Users: {{ lobby.users }}</h6>
         </b-col>
         <b-col sm="6" class="text-right">
-          <b-btn variant="success" @click.prevent="joinLobby(lobby.id)" :disabled="loading">Join</b-btn>
+          <b-btn variant="success" @click.prevent="joinLobby(lobby)" :disabled="loading">Join</b-btn>
           <b-btn variant="danger" @click.prevent="deleteLobby(lobby.id)" :disabled="loading">Delete</b-btn>
         </b-col>
       </b-row>
@@ -42,11 +42,11 @@ export default {
           this.loading = false
         })
     },
-    joinLobby (id) {
+    joinLobby (lobby) {
       this.loading = true
-      HTTP.patch(`/api/v1/lobbies/${id}/join`)
+      HTTP.patch(`/api/v1/lobbies/${lobby.id}/join`)
         .then(response => {
-          this.$parent.refreshLobby()
+          this.$parent.enterLobby(lobby)
           this.loading = false
         })
         .catch(error => {
