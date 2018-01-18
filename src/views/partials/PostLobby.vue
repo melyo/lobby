@@ -28,21 +28,25 @@ export default {
     }
   },
   methods: {
-    getLobbies() {
+    getLobbies () {
       this.loading = true
       HTTP.post('/api/v1/lobbies', this.form)
         .then(response => {
-          console.log(response)
+          this.resetForm()
           this.$parent.refreshLobby()
           this.error = false
           this.loading = false
         })
         .catch(error => {
-          console.log(error.response)
           this.error = true
           this.loading = false
         })
     },
+    resetForm () {
+      this.form = {
+        name: ''
+      }
+    }
   }
 }
 </script>
